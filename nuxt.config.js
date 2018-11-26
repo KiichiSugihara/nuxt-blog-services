@@ -3,6 +3,9 @@ const pkg = require('./package')
 module.exports = {
   mode: 'universal',
   srcDir: 'app',
+  axios: {
+    databaseURL: "https://nuxtjs-blog-e1139.firebaseio.com",
+  },
 
   /*
   ** Headers of the page

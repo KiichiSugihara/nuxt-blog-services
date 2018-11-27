@@ -24,6 +24,7 @@
 
 <script>
 import {  mapGetters,mapActions} from "vuex";
+import Cokkies from 'universal-cookie'
 export default {
   asyncData({redirect,store}){
     if (store.getters['user']){
@@ -39,10 +40,13 @@ export default {
   computed: {
     buttonText() {
       return this.isCreateMode ? '新規登録' :'ログイン'
-      }
+      },
+      ...mapGetters(['user'])
     },
     methods: {
       async handleClickSubmit(){
+        // cookie を定義
+        const cookies = new Cookies()
         if (this.isCreateMode){
           try{
             await this.register({ ...this.formData})
@@ -53,8 +57,9 @@ export default {
               positon:'bottom-right',
               duration:1000
             })
+            cookies.set('user',JSON.stringify(this.user))
             this.$router.push('/posts/')
-          } catch() {
+          } catch(e) {
             this.$notify.error({
               title:'アカウント作成失敗',
               message:'すでに登録されているか、不正なユーザーIDです',
@@ -72,6 +77,7 @@ export default {
               positon:'bottom-right',
               duration:1000
             })
+            cookies.set('user',JSON.stringify(this.user))
             this.$router.push('/posts/')
           }catch (e){
             this.$notify.error({

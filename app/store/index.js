@@ -5,8 +5,8 @@ export const state = () => ({
   user: null
 })
 
-// gettersでstateの初期データの参照
-// stateデータを加工したいときに表示
+// getters で state の初期データの参照
+// state データを加工したいときに表示
 export const getters = {
   isLoggedIn:(state) => state.isLoggedIn,
   user: (state) => state.user
@@ -25,7 +25,7 @@ export const mutations = {
 export const actions = {
   async login({ commit }, { id }) {
     const user = await this.$axios.$get(`/user/${id}.json`)
-    if (!user.id) throw new Error('Invaild user')
+    if (!user.id) throw new Error('Invalid user')
     commit('setUser', { user })
   },
   async register({ commit }, { id }) {
